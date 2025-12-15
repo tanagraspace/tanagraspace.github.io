@@ -79,7 +79,7 @@ naver_site_verification  :
 yandex_site_verification :
 baidu_site_verification  :
 # Footer Related
-hide_footer              : true
+hide_footer              : false
 
 # Social Sharing
 twitter:
