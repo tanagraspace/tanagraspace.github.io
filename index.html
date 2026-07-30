@@ -3,37 +3,126 @@ title: "Tanagra Space"
 layout: splash
 header:
   overlay_color: "#000"
-  overlay_filter: "0.5"
-  overlay_image: /assets/img/splash.jpg
+  overlay_filter: "0.2"
+  overlay_image: /assets/img/hero-abstract.png
+  og_image: /assets/img/og-card.png
 excerpt: "Launching artificial intelligence into orbit.<br><br>"
 
 intro:
   - excerpt: 'Pioneering **Space Platform as-a-Service (SPaaS)** with satellite edge computing for onboard machine learning in autonomous flight operations.<br><br>*Bringing neural networks into space!*'
 
 feature_row:
-  - image_path: /assets/img/usgs-04b.jpg
-    title: "🤖 Onboard Autonomy"
+  - image_path: /assets/img/services/onboard-autonomy.png
+    alt: "A mission schedule timeline with tasks executing at the current time"
+    title: "Onboard Autonomy"
     excerpt: "Enable autonomous spacecraft operations.<br><br>Unclogging ground-segment data-processing funnels with automated planning, scheduling, and control mechanisms."
     #url: "#test-link"
     #btn_label: "Read More"
     #btn_class: "btn--primary"
-  - image_path: /assets/img/usgs-06b.jpg
-    title: "🔎 Novelty Detection"
+  - image_path: /assets/img/services/novelty-detection.png
+    alt: "A field of data points with one outlier highlighted by detection rings"
+    title: "Novelty Detection"
     excerpt: "Identify and highlight features of interest.<br><br>Filtering through large datasets of remote sensing in earth observation and planetary exploration."
     #url: "#test-link"
     #btn_label: "Read More"
     #btn_class: "btn--secondar"
-  - image_path: /assets/img/usgs-07b.jpg
-    title: "🛰️ In-Orbit ML"
+  - image_path: /assets/img/services/in-orbit-ml.png
+    alt: "A neural network diagram with an active path lighting up to the output"
+    title: "In-Orbit ML"
     excerpt: "Satellite APIs for in-flight machine learning.<br><br>Leveraging edge computing and demystifying AI by making it accessible to spacecraft operators and experimenters."
     #url: "#test-link"
     #btn_label: "Read More"
     #btn_class: "btn--primary"
+
+project_row:
+  - image_path: /assets/img/projects/opssat-pretty-doomed.png
+    alt: "PRETTY DOOMed"
+    title: "PRETTY DOOMed"
+    excerpt: "The first voice command of a satellite: OPS-SAT PRETTY playing DOOM from orbit, launched by a spoken command over amateur radio."
+    url: "/opssat-pretty-doomed/"
+    btn_label: "Play DOOM"
+    btn_class: "btn--primary"
+  - image_path: /assets/img/projects/ccsds124.png
+    alt: "CCSDS 124.0-B-1"
+    title: "CCSDS 124.0-B-1"
+    excerpt: "Multi-language implementations (C, C++, Python, Go, Rust, Java) of the CCSDS lossless telemetry compression standard, built on ESA's POCKET+ algorithm for low-power spacecraft processors."
+    url: "/ccsds124/"
+    btn_label: "Explore"
+    btn_class: "btn--primary"
+  - image_path: /assets/img/projects/boresight.png
+    alt: "Boresight"
+    title: "Boresight"
+    excerpt: "An animated terminal visualizer for spacecraft attitude and target pointing."
+    url: "/boresight/"
+    btn_label: "See it"
+    btn_class: "btn--primary"
+  - image_path: /assets/img/projects/hyperscape100-emu.png
+    alt: "HyperScape100 Emulator"
+    title: "HyperScape100 Emulator"
+    excerpt: "An ICD-compliant HyperScape100 emulator that streams session data over TCP with packet framing, CRC-32, and band reconfiguration, so you can develop without the hardware."
+    url: "/hyperscape100-emu/"
+    btn_label: "Emulate"
+    btn_class: "btn--primary"
 ---
 
 {% include feature_row id="intro" type="center" %}
 {% include feature_row %}
 
+<div align="center">
+  <h2 class="archive__item-title" id="projects">Recent Projects</h2>
+</div>
+
+<style>
+  /* give the hero more presence and reveal more of the orbit artwork */
+  .page__hero--overlay { padding: 7em 0 6em; }
+  /* round the service teasers to match the project cards */
+  .feature__item .archive__item-teaser { border-radius: 16px; overflow: hidden; }
+  .ts-projects { max-width: 940px; margin: 0 auto 4.5rem; display: grid;
+    grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
+  @media (max-width: 600px) { .ts-projects { grid-template-columns: 1fr; } }
+  .ts-card { display: flex; flex-direction: column; background: #f2e6d2; border-radius: 16px;
+    overflow: hidden; text-decoration: none !important; color: inherit;
+    border: 1px solid rgba(20,10,10,.10); box-shadow: 0 3px 14px rgba(20,10,10,.10);
+    transition: transform .18s ease, box-shadow .18s ease; }
+  .ts-card:hover { transform: translateY(-6px); box-shadow: 0 16px 34px rgba(20,10,10,.22); }
+  .ts-card__media { aspect-ratio: 16 / 9; background-color: #140a0a;
+    background-position: center; background-size: cover; background-repeat: no-repeat; }
+  .ts-card__body { display: flex; flex-direction: column; flex: 1; padding: 1.15rem 1.35rem 1.35rem; }
+  .ts-card__title { margin: 0 0 .4rem; font-size: 1.22rem; font-weight: 700; color: #1b1b1b; line-height: 1.25; }
+  .ts-card__desc { margin: 0 0 1rem; font-size: .94rem; line-height: 1.5; color: #5c554c; flex: 1; }
+  .ts-card__cta { align-self: flex-start; font-weight: 700; color: #fc3a52; font-size: .92rem; }
+  .ts-card__cta .arrow { display: inline-block; transition: transform .18s ease; }
+  .ts-card:hover .ts-card__cta .arrow { transform: translateX(4px); }
+  .ts-more { text-align: center; margin: -2.6rem auto 4.5rem; font-weight: 700; font-size: .95rem; }
+  .ts-more a { color: #fc3a52; text-decoration: none; }
+  .ts-more a:hover { text-decoration: underline; }
+  /* contact form, matching the card design */
+  .ts-contact { max-width: 640px; margin: 0 auto 2rem; background: #f2e6d2;
+    border: 1px solid rgba(20,10,10,.10); border-radius: 16px;
+    box-shadow: 0 3px 14px rgba(20,10,10,.10); padding: 1.8rem 2rem 2rem; }
+  .ts-contact label { font-weight: 700; font-size: .92rem; color: #1b1b1b; }
+  .ts-contact input, .ts-contact textarea { width: 100%; background: #fbf4e8;
+    border: 1px solid rgba(20,10,10,.15); border-radius: 10px; padding: .65rem .8rem;
+    font-size: 1rem; box-shadow: none; }
+  .ts-contact input:focus, .ts-contact textarea:focus {
+    border-color: #fc3a52; outline: none; box-shadow: 0 0 0 3px rgba(252,58,82,.18); }
+  .ts-contact .btn { padding: .7rem 2.4rem; border-radius: 10px; }
+</style>
+
+<div class="ts-projects">
+{% for p in page.project_row %}
+  <a class="ts-card" href="{{ p.url }}">
+    <div class="ts-card__media" style="background-image: url('{{ p.image_path }}')"></div>
+    <div class="ts-card__body">
+      <h3 class="ts-card__title">{{ p.title }}</h3>
+      <p class="ts-card__desc">{{ p.excerpt }}</p>
+      <span class="ts-card__cta">{{ p.btn_label }} <span class="arrow">&rarr;</span></span>
+    </div>
+  </a>
+{% endfor %}
+</div>
+
+<p class="ts-more"><a href="https://github.com/tanagraspace">All projects on GitHub &rarr;</a></p>
 
 <div>
   <div align="center">
@@ -41,21 +130,20 @@ feature_row:
   </div>
 
   <form
+    class="ts-contact"
     action="https://formspree.io/f/mrgodzqw"
     method="POST"
   >
     <div class="form-group">
       <label for="contactEmail">Your email:</label>
-      <input type="email" name="email" id="contactEmail" />
+      <input type="email" name="email" id="contactEmail" required />
     </div>
     <div class="form-group">
       <label for="contactMessage">Your message:</label>
-      <textarea name="message" id="contactMessage" class="form-control" rows="5"></textarea>
+      <textarea name="message" id="contactMessage" class="form-control" rows="5" required></textarea>
     </div>
     <div align="center">
       <button type="submit" class="btn btn--primary">Send</button>
     </div>
   </form>
 </div>
-
-<hr>
