@@ -20,18 +20,18 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
     <span class="tip" role="tooltip">Click to hear the first human voice command captured by a satellite.</span>
   </div>
   <p class="tagline">The first voice command of a satellite</p>
-  <p>On Jul 27, 2026, a radio amateur spoke a command over the airwaves to a satellite orbiting Earth. The satellite heard it, and understood its assignment:</p>
+  <p>On Jul 27, 2026, a radio amateur spoke a command over the airwaves to a satellite orbiting Earth. The satellite heard it and understood its assignment:</p>
   <p class="punch">to play <span class="doom">DOOM</span>.</p>
 </header>
 
 <main class="content">
   <section>
     <h2>What happened</h2>
-    <p>A radio amateur group based in Oslo transmitted a spoken command on the amateur radio band to <strong>OPS-SAT PRETTY</strong>, an experimental European Space Agency (ESA) satellite. On board, with no human in the loop, the satellite recorded the radio signal, recovered the voice from the noise, used voice recognition AI to transcribe it to text, recognized the command, launched the 1993 game <span class="doom">DOOM</span>, then downlinked a "postcard" image of the moment.</p>
-    <p>It had never been done before. Satellites are normally commanded with structured, pre-formatted instruction files uplinked on scheduled passes. This is the first time a satellite has been commanded by voice, in plain spoken language, and acted on it autonomously in orbit.</p>
+    <p>A radio amateur group based in Oslo transmitted a spoken command on the 23 cm amateur radio band to <strong>OPS-SAT PRETTY</strong>, an experimental European Space Agency (ESA) satellite. On board and with no human in the loop, the satellite captured the radio signal, recovered the voice from the noise, transcribed it with a speech-to-text AI model, detected the command, launched the 1993 game <span class="doom">DOOM</span>, and then downlinked a "postcard" image of the moment.</p>
+    <p>It had never been done before. Satellites are normally commanded with telecommands: structured binary packets uplinked during scheduled passes and built to strict protocols, such as the CCSDS TC Space Data Link Protocol and the European Packet Utilisation Standard (PUS). This is the first time a satellite has been commanded by voice in plain spoken language and has acted on the command autonomously in orbit.</p>
     <figure class="postcard">
       <img src="/assets/opssat-pretty-doomed/postcard.png" alt="A DOOM-themed postcard composed on board the satellite: a gameplay frame with logos and signal diagnostics.">
-      <figcaption>The postcard the satellite composed on board after launching <span class="doom">DOOM</span>, and downlinked to the ground. The command actually transmitted was "LIMA ALFA FOUR OSCAR, PRETTY PRETTY, PLEASE PLAY DOOM DOOM DOOM" (the Oslo club call sign, then the command, repeated). The transcription printed on the postcard is imperfect because the onboard speech-to-text uses a small, lightweight model sized to fit the satellite's limited computer, but the repeated <span class="doom">DOOM</span> command still gets through.</figcaption>
+      <figcaption>The postcard the satellite composed on board and downlinked to the ground after launching <span class="doom">DOOM</span>. The command actually transmitted was "LIMA ALFA FOUR OSCAR, PRETTY PRETTY, PLEASE PLAY DOOM DOOM DOOM" (the Oslo club call sign, then the command, repeated). The transcription printed on the postcard is imperfect because the onboard speech-to-text uses a small model sized to fit the satellite's limited computer, but the repeated <span class="doom">DOOM</span> command still gets through.</figcaption>
     </figure>
   </section>
 
@@ -39,10 +39,10 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
     <h2>How it works</h2>
     <p>The command travels from a microphone on the ground to a game launching in space in a handful of steps, all running on the satellite's small onboard computer:</p>
     <div class="steps">
-      <div class="step"><div class="n">1 · Listen</div><h3>Capture</h3><p>The satellite's software radio records the faint radio signal as it flies over the ground station.</p></div>
-      <div class="step"><div class="n">2 · Focus</div><h3>Narrow in</h3><p>It finds the voice buried in the noise and tunes into just that sliver of the spectrum.</p></div>
+      <div class="step"><div class="n">1 · Listen</div><h3>Capture</h3><p>The satellite's software radio records the radio signal as the spacecraft flies over the ground station.</p></div>
+      <div class="step"><div class="n">2 · Focus</div><h3>Narrow in</h3><p>It finds the voice buried in the noise and tunes in to just that sliver of the spectrum.</p></div>
       <div class="step"><div class="n">3 · Understand</div><h3>Transcribe</h3><p>An onboard speech-to-text AI model turns the recovered audio into words.</p></div>
-      <div class="step"><div class="n">4 · Decide</div><h3>Recognize</h3><p>A matcher checks the words for the command, tolerant of the mangling a noisy radio link causes.</p></div>
+      <div class="step"><div class="n">4 · Decide</div><h3>Recognize</h3><p>A matcher checks the words for the command, tolerant of the mangling caused by a noisy radio link.</p></div>
       <div class="step"><div class="n">5 · Play</div><h3>Launch <span class="doom">DOOM</span></h3><p>On a match, the satellite plays <span class="doom">DOOM</span> and renders a postcard from the gameplay and the signal, then downlinks it.</p></div>
       <div class="step"><div class="n">6 · Celebrate</div><h3>A first</h3><p><span class="doom">DOOM</span>, played in orbit, launched by a human voice from the ground. The first time a satellite has been commanded by voice.</p></div>
     </div>
@@ -50,7 +50,7 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
 
   <figure class="postcard">
     <img src="/assets/opssat-pretty-doomed/gameplay.gif" alt="Animated gameplay of DOOM captured on board the satellite.">
-    <figcaption>A segment of the <span class="doom">DOOM</span> gameplay the satellite ran and captured on board, frame by frame, on the morning pass.</figcaption>
+    <figcaption>A segment of the <span class="doom">DOOM</span> gameplay the satellite ran on the morning pass and captured on board frame by frame.</figcaption>
   </figure>
 
   <section>
@@ -60,7 +60,7 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
       <div class="run">
         <div class="when">Jul 27, 2026 · morning</div>
         <h3>Run 6</h3>
-        <p>A synthesised voice message was transmitted on a loop. Three of the six recordings detected the command and launched <span class="doom">DOOM</span>.</p>
+        <p>A synthesized voice message was transmitted on a loop. The satellite detected the command and launched <span class="doom">DOOM</span>.</p>
         <p class="deb"><a href="https://github.com/georgeslabreche/opssat-pretty-doomed/tree/main/pretty-doomed/docs/flight/debriefings/run-06-2026-07-27">Debrief here →</a></p>
       </div>
       <div class="run">
@@ -72,8 +72,8 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
     </div>
     <p>Here is exactly what the satellite's onboard transcription produced from one recording, mangled by the noisy link but unmistakable:</p>
     <p class="quote">"FOR PRETTY PRETTY PLEASE PLAY DOON DO ... THE FORASCAR PRETTY PRETTY PLEASE PLAY DOOMS ... AFORE OSSICA PRETTY PRETTY PLEASE PLAY ..."</p>
-    <p>The command was repeated on a loop precisely so that, even when the noise turned "DOOM" into "DOON" or "DOOMS", at least one clean copy would get through.</p>
-    <p>Other passes came through a little cleaner. Across the successful passes (<a href="https://github.com/georgeslabreche/opssat-pretty-doomed/tree/main/pretty-doomed/docs/flight/debriefings/run-06-2026-07-27">Run 6</a> and <a href="https://github.com/georgeslabreche/opssat-pretty-doomed/tree/main/pretty-doomed/docs/flight/debriefings/run-07-2026-07-27">Run 7</a>) some recordings transcribed the command more clearly, for example Run 7's live-voice pass, transcribed on board as <code>AND FAR BRIEFLY PLAYING DOOM STEAM DOOM PRECIPATED</code>, with <span class="doom">DOOM</span> itself spelled out.</p>
+    <p>The command was repeated on a loop precisely so that at least one clean copy would get through even when the noise turned "DOOM" into "DOON" or "DOOMS".</p>
+    <p>Other recordings came through a little cleaner across the successful passes (<a href="https://github.com/georgeslabreche/opssat-pretty-doomed/tree/main/pretty-doomed/docs/flight/debriefings/run-06-2026-07-27">Run 6</a> and <a href="https://github.com/georgeslabreche/opssat-pretty-doomed/tree/main/pretty-doomed/docs/flight/debriefings/run-07-2026-07-27">Run 7</a>). For example, Run 7's live-voice pass was transcribed on board as <code>AND FAR BRIEFLY PLAYING DOOM STEAM DOOM PRECIPATED</code>, with <span class="doom">DOOM</span> itself spelled out.</p>
     <figure class="postcard">
       <video src="/assets/opssat-pretty-doomed/pass-analysis.mp4" controls preload="metadata"></video>
       <figcaption>The morning pass in real time, reconstructed from the satellite's attitude telemetry: its orientation and line of sight to the Oslo ground station (left), and how far its antenna was off target (right). Each capture's recovered audio plays at the moment it happened.</figcaption>
@@ -82,14 +82,14 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
 
   <section>
     <h2>Who made it happen</h2>
-    <p>The experiment depends on the amateur radio community, who form its ground segment. The transmissions were made by two volunteer radio amateur teams:</p>
+    <p>The experiment depended on the amateur radio community, who formed its ground segment. The transmissions were made by two volunteer radio amateur teams:</p>
     <ul>
-      <li><strong>Oslo Group of the Norwegian Radio Relay League (NRRL)</strong>, call sign LA4O, who ran the successful <a href="https://doom.lb6aj.net">July 2026 campaign</a> from a rooftop in Oslo.</li>
-      <li><strong>Radio amateurs in Legnica, Poland</strong> (SQ6RDP and SQ6QV), who ran the earlier link tests from April to June 2026.</li>
+      <li><strong>Oslo Group of the Norwegian Radio Relay League (NRRL)</strong>, who ran the successful <a href="https://doom.lb6aj.net">July 2026 campaign</a> from a rooftop in Oslo under the club call sign LA4O.</li>
+      <li><strong>Radio amateurs in Legnica, Poland</strong>, who ran the earlier link tests from April to June 2026 under the call signs SQ6RDP and SQ6QV.</li>
     </ul>
     <p>Full radio amateur credits are in the <a href="https://github.com/georgeslabreche/opssat-pretty-doomed#acknowledgements">project acknowledgements</a>.</p>
-    <p>The experiment flies on the European Space Agency's OPS-SAT PRETTY spacecraft, with passes scheduled and operated through the OPS-SAT mission operations. Thanks also to Maximilian Henkel, Ólafur, and Vladimir for their collaboration and support throughout the campaign.</p>
-    <p>The experiment is led by <a href="https://georges.fyi">Georges Labrèche</a>, principal investigator and researcher.</p>
+    <p>The experiment flew on the European Space Agency's OPS-SAT PRETTY spacecraft, with passes scheduled and operated by the OPS-SAT mission operations team. Thanks also to Maximilian Henkel, Ólafur Waage, and Vladimir Zelenevskiy for their collaboration and support throughout the campaign.</p>
+    <p>The experiment was led by <a href="https://georges.fyi">Georges Labrèche</a>, principal investigator and researcher.</p>
   </section>
 
   <section>
@@ -106,7 +106,7 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
 
 <footer>
   <div class="credit">
-    An OPS-SAT PRETTY experiment. Built on open-source and amateur radio. Playing <span class="doom">DOOM</span>, from orbit, by voice command.
+    An OPS-SAT PRETTY experiment. Built on open source and amateur radio. Playing <span class="doom">DOOM</span>, from orbit, by voice command.
   </div>
 </footer>
 
