@@ -28,10 +28,17 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
   <section>
     <h2>What happened</h2>
     <p>A radio amateur group based in Oslo transmitted a spoken command on the 23 cm amateur radio band to <strong>OPS-SAT PRETTY</strong>, an experimental European Space Agency (ESA) satellite. On board and with no human in the loop, the satellite captured the radio signal, recovered the voice from the noise, transcribed it with a speech-to-text AI model, detected the command, launched the 1993 game <span class="doom">DOOM</span>, and then downlinked a "postcard" image of the moment.</p>
+    <p>It happened twice on the same day. On the morning pass the team transmitted a synthesized voice on a loop. That evening an operator spoke the command live into a microphone, and the satellite detected that too.</p>
+    <figure class="postcard" id="human-voice">
+      <div class="player">
+        <audio src="/assets/opssat-pretty-doomed/command.mp3" controls preload="metadata"></audio>
+      </div>
+      <figcaption>The live human voice command from the evening pass, as the satellite heard it, recovered from the noise floor in orbit.</figcaption>
+    </figure>
     <p>It had never been done before. Satellites are normally commanded with telecommands: structured binary packets uplinked during scheduled passes and built to strict protocols, such as the CCSDS TC Space Data Link Protocol and the European Packet Utilisation Standard (PUS). This is the first time a satellite has been commanded by voice in plain spoken language and has acted on the command autonomously in orbit.</p>
     <figure class="postcard">
-      <img src="/assets/opssat-pretty-doomed/postcard.png" alt="A DOOM-themed postcard composed on board the satellite: a gameplay frame with logos and signal diagnostics.">
-      <figcaption>The postcard the satellite composed on board and downlinked to the ground after launching <span class="doom">DOOM</span>. The command actually transmitted was "LIMA ALFA FOUR OSCAR, PRETTY PRETTY, PLEASE PLAY DOOM DOOM DOOM" (the Oslo club call sign, then the command, repeated). The transcription printed on the postcard is imperfect because the onboard speech-to-text uses a small model sized to fit the satellite's limited computer, but the repeated <span class="doom">DOOM</span> command still gets through.</figcaption>
+      <img src="/assets/opssat-pretty-doomed/postcard-evening.png" alt="A DOOM-themed postcard composed on board the satellite on the evening pass: a gameplay frame with logos, the onboard transcription, and signal diagnostics.">
+      <figcaption>The satellite composed this postcard on board and downlinked it to the ground after launching <span class="doom">DOOM</span> on the evening pass, the one commanded by a live human voice. An operator spoke into the microphone: "LIMA ALFA FOUR OSCAR, PRETTY PLAY <span class="doom">DOOM</span> <span class="doom">DOOM</span> <span class="doom">DOOM</span>, PRETTY PLAY <span class="doom">DOOM</span> <span class="doom">DOOM</span> <span class="doom">DOOM</span>." That is the club call sign for legal identification, then the command twice, with <span class="doom">DOOM</span> repeated each time. Printed across the postcard is what the onboard speech-to-text made of it. The model is small enough to fit the satellite's limited computer, so the transcription is rough, but the repeated <span class="doom">DOOM</span> trigger word still got through.</figcaption>
     </figure>
   </section>
 
@@ -55,25 +62,21 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
 
   <section>
     <h2>The milestone passes</h2>
-    <p>The command was detected and <span class="doom">DOOM</span> launched on two satellite passes over Oslo on the same day, with the Oslo radio amateur team transmitting:</p>
+    <p>The satellite detected the command and launched <span class="doom">DOOM</span> on two passes over Oslo on the same day. The Oslo radio amateur team transmitted on both:</p>
     <div class="runs">
       <div class="run">
-        <div class="when">Jul 27, 2026 · morning</div>
+        <div class="when">Jul 27, 2026 · morning · synthesized voice</div>
         <h3>Run 6</h3>
-        <p>A synthesized voice message was transmitted on a loop. The satellite detected the command and launched <span class="doom">DOOM</span>.</p>
+        <p>The team transmitted a synthesized voice message from a keyer, on a loop. The satellite detected the command and launched <span class="doom">DOOM</span>.</p>
         <p class="deb"><a href="https://github.com/georgeslabreche/opssat-pretty-doomed/tree/main/pretty-doomed/docs/flight/debriefings/run-06-2026-07-27">Debrief here →</a></p>
       </div>
       <div class="run">
-        <div class="when">Jul 27, 2026 · evening</div>
+        <div class="when">Jul 27, 2026 · evening · live human voice</div>
         <h3>Run 7</h3>
-        <p>This time an operator spoke the command live into a microphone, no recording. The satellite detected it again, the first detection of a live human voice from orbit.</p>
+        <p>This time an operator spoke the command live into a microphone, no keyer and no recording. The satellite detected it again, the first detection of a live human voice from orbit.</p>
         <p class="deb"><a href="https://github.com/georgeslabreche/opssat-pretty-doomed/tree/main/pretty-doomed/docs/flight/debriefings/run-07-2026-07-27">Debrief here →</a></p>
       </div>
     </div>
-    <p>Here is exactly what the satellite's onboard transcription produced from one recording, mangled by the noisy link but unmistakable:</p>
-    <p class="quote">"FOR PRETTY PRETTY PLEASE PLAY DOON DO ... THE FORASCAR PRETTY PRETTY PLEASE PLAY DOOMS ... AFORE OSSICA PRETTY PRETTY PLEASE PLAY ..."</p>
-    <p>The command was repeated on a loop precisely so that at least one clean copy would get through even when the noise turned "DOOM" into "DOON" or "DOOMS".</p>
-    <p>Other recordings came through a little cleaner across the successful passes (<a href="https://github.com/georgeslabreche/opssat-pretty-doomed/tree/main/pretty-doomed/docs/flight/debriefings/run-06-2026-07-27">Run 6</a> and <a href="https://github.com/georgeslabreche/opssat-pretty-doomed/tree/main/pretty-doomed/docs/flight/debriefings/run-07-2026-07-27">Run 7</a>). For example, Run 7's live-voice pass was transcribed on board as <code>AND FAR BRIEFLY PLAYING DOOM STEAM DOOM PRECIPATED</code>, with <span class="doom">DOOM</span> itself spelled out.</p>
     <figure class="postcard">
       <video src="/assets/opssat-pretty-doomed/pass-analysis.mp4" controls preload="metadata"></video>
       <figcaption>The morning pass in real time, reconstructed from the satellite's attitude telemetry: its orientation and line of sight to the Oslo ground station (left), and how far its antenna was off target (right). Each capture's recovered audio plays at the moment it happened.</figcaption>
@@ -111,6 +114,91 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
 </footer>
 
 <script>
+  // The body player. The markup ships a native <audio controls> so the clip is
+  // playable without JS; here it is swapped for controls in the page palette.
+  // Seeking stays on an <input type="range">, so it keeps keyboard support.
+  (function () {
+    var PLAY = '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg>';
+    var PAUSE = '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0h4v14H0zM8 0h4v14H8z"/></svg>';
+
+    function clock(s) {
+      if (!isFinite(s)) return '0:00';
+      var m = Math.floor(s / 60);
+      var r = Math.floor(s % 60);
+      return m + ':' + (r < 10 ? '0' : '') + r;
+    }
+
+    Array.prototype.forEach.call(document.querySelectorAll('.player'), function (box) {
+      var audio = box.querySelector('audio');
+      if (!audio) return;
+
+      audio.removeAttribute('controls');
+      box.classList.add('enhanced');
+
+      var pp = document.createElement('button');
+      pp.type = 'button';
+      pp.className = 'pp';
+      pp.innerHTML = PLAY;
+      pp.setAttribute('aria-label', 'Play the voice command');
+
+      var seek = document.createElement('input');
+      seek.type = 'range';
+      seek.className = 'seek';
+      seek.min = 0; seek.max = 100; seek.step = 0.1; seek.value = 0;
+      seek.setAttribute('aria-label', 'Seek within the voice command');
+
+      var time = document.createElement('span');
+      time.className = 't';
+      time.textContent = '0:00';
+
+      box.appendChild(pp);
+      box.appendChild(seek);
+      box.appendChild(time);
+
+      var scrubbing = false;
+
+      pp.addEventListener('click', function () {
+        if (audio.paused) { audio.play(); } else { audio.pause(); }
+      });
+
+      audio.addEventListener('play', function () {
+        pp.innerHTML = PAUSE;
+        pp.setAttribute('aria-label', 'Pause the voice command');
+      });
+
+      audio.addEventListener('pause', function () {
+        pp.innerHTML = PLAY;
+        pp.setAttribute('aria-label', 'Play the voice command');
+      });
+
+      audio.addEventListener('timeupdate', function () {
+        if (scrubbing || !audio.duration) return;
+        seek.value = (audio.currentTime / audio.duration) * 100;
+        time.textContent = clock(audio.currentTime) + ' / ' + clock(audio.duration);
+      });
+
+      audio.addEventListener('loadedmetadata', function () {
+        time.textContent = '0:00 / ' + clock(audio.duration);
+      });
+
+      audio.addEventListener('ended', function () {
+        seek.value = 0;
+        time.textContent = '0:00 / ' + clock(audio.duration);
+      });
+
+      seek.addEventListener('input', function () {
+        scrubbing = true;
+        if (audio.duration) time.textContent =
+          clock((seek.value / 100) * audio.duration) + ' / ' + clock(audio.duration);
+      });
+
+      seek.addEventListener('change', function () {
+        if (audio.duration) audio.currentTime = (seek.value / 100) * audio.duration;
+        scrubbing = false;
+      });
+    });
+  })();
+
   // The hero signal is the actual amplitude envelope of the voice command
   // recovered on Run 7 (evening pass, live human voice) — WAVE below is the
   // peak envelope of command.mp3 (the voice segment of capture-002-audio.wav),
