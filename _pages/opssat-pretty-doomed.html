@@ -295,15 +295,425 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
     voice.addEventListener('pointerdown', function (e) {
       voice.classList.add('played');
       start();
-      punch(e.clientX, e.clientY, voice);
+      if (!god) punch(e.clientX, e.clientY, voice);   // in god mode the click fires a rocket
+    });
+
+    // IDDQD easter egg. Typing the DOOM god-mode cheat anywhere on the page
+    // toggles god mode: the screen flashes gold, the game's original status
+    // message appears, the status bar and rocket launcher come out, and
+    // clicks fire rockets.
+    var god = false, cheat = '';
+    var stmsg = document.createElement('div');
+    stmsg.className = 'st-msg';
+    stmsg.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(stmsg);
+    var stTimer = 0;
+    function stMessage(text) {
+      stmsg.textContent = text;
+      stmsg.classList.add('show');
+      clearTimeout(stTimer);
+      stTimer = setTimeout(function () { stmsg.classList.remove('show'); }, 2500);
+    }
+
+    // God mode also pins the DOOM status bar to the bottom of the page.
+    // stbar-god.png is composited from the real assets in the same doom.wad
+    // that flew on the satellite (STBAR, STARMS, STTNUM/STTPRCNT digits,
+    // STYSNUM/STGNUM digits, and the STFGOD0 god-mode face), showing the
+    // authentic IDDQD-at-pistol-start state.
+    var stbar = document.createElement('div');
+    stbar.className = 'st-bar';
+    stbar.setAttribute('aria-hidden', 'true');
+    stbar.innerHTML =
+      '<div class="bar-wrap">' +
+        '<img src="' + ASSETS + 'stbar-god.png" alt="">' +
+        '<div class="st-ammo"></div>' +      // live AMMO digits (STTNUM)
+        '<div class="st-rckt"></div>' +      // live RCKT count (STYSNUM)
+      '</div>';
+    document.body.appendChild(stbar);
+
+    // Live rocket count: 50 down to 1, then a fresh 50. The digits are the
+    // real STTNUM/STYSNUM sprites overlaid at DOOM's own coordinates.
+    var ammoLeft = 50;
+    var ammoBig = stbar.querySelector('.st-ammo');
+    var ammoRckt = stbar.querySelector('.st-rckt');
+    function digitImgs(n, prefix) {
+      var s = String(n), h = '';
+      for (var i = 0; i < s.length; i++) {
+        h += '<img src="' + ASSETS + prefix + s[i] + '.png" alt="">';
+      }
+      return h;
+    }
+    function updateAmmo() {
+      ammoBig.innerHTML = digitImgs(ammoLeft, 'sttnum');
+      ammoRckt.innerHTML = digitImgs(ammoLeft, 'stysnum');
+    }
+    updateAmmo();
+
+    // Rocket launcher: while god mode is on, the launcher (MISGA0) sits on
+    // the status bar and a click anywhere fires a rocket at the cursor:
+    // muzzle flash (MISFA0), rocket in flight (MISLA7A3), explosion
+    // (MISLB0-D0), launch and blast sounds (DSRLAUNC, DSBAREXP), all from
+    // the flight WAD. The fist stands down while the launcher is out.
+    var cacoRocketHit = null;   // set in the caco block: kills the caco on a hit
+    var launcher = document.createElement('div');
+    launcher.className = 'launcher';
+    launcher.setAttribute('aria-hidden', 'true');
+    launcher.innerHTML =
+      '<img class="gun" src="' + ASSETS + 'misga0.png" alt="">' +
+      '<img class="flash" src="' + ASSETS + 'misfa0.png" alt="">';
+    stbar.appendChild(launcher);
+
+    var launchSnd = new Audio(ASSETS + 'dsrlaunc.wav');
+    var boomSnd = new Audio(ASSETS + 'dsbarexp.wav');
+    launchSnd.volume = 0.35; boomSnd.volume = 0.4;
+    launchSnd.preload = 'auto'; boomSnd.preload = 'auto';
+    launchSnd.load(); boomSnd.load();
+    function replay(snd) {
+      if (snd.readyState) snd.currentTime = 0;   // seeking an unloaded audio throws in old WebKit
+      var p = snd.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+
+    // Firing at text blasts the letters apart. On impact, text blocks near
+    // the blast are split into per-letter spans (once, lazily), and letters
+    // inside the radius fly out ballistically with spin and gravity, fade,
+    // then settle back into place.
+    var BLAST_R = 140;
+    function letterize(el) {
+      if (el.dataset.ltr) return;
+      el.dataset.ltr = '1';
+      (function walk(node) {
+        var kids = Array.prototype.slice.call(node.childNodes);
+        for (var i = 0; i < kids.length; i++) {
+          var n = kids[i];
+          if (n.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            var text = n.nodeValue;
+            for (var j = 0; j < text.length; j++) {
+              if (/\s/.test(text[j])) {
+                frag.appendChild(document.createTextNode(text[j]));
+              } else {
+                var sp = document.createElement('span');
+                sp.className = 'ltr';
+                sp.textContent = text[j];
+                frag.appendChild(sp);
+              }
+            }
+            node.replaceChild(frag, n);
+          } else if (n.nodeType === 1) {
+            walk(n);
+          }
+        }
+      })(el);
+    }
+    function flyLetter(sp, bx, by) {
+      if (sp.classList.contains('flying')) return;
+      var r = sp.getBoundingClientRect();
+      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      var d = Math.hypot(cx - bx, cy - by);
+      if (d > BLAST_R) return;
+      var ang = Math.atan2(cy - by, cx - bx) + (Math.random() - 0.5) * 0.6;
+      var power = (1 - d / BLAST_R) * 280 + 70;
+      var dx = Math.cos(ang) * power, dy = Math.sin(ang) * power;
+      var rot = (Math.random() - 0.5) * 540;
+      var fall = 260 + Math.random() * 260;
+      sp.classList.add('flying');
+      var out = sp.animate([
+        { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+        { transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(' + rot * 0.6 + 'deg)', opacity: 1, offset: 0.45 },
+        { transform: 'translate(' + dx * 1.35 + 'px,' + (dy + fall) + 'px) rotate(' + rot + 'deg)', opacity: 0 }
+      ], { duration: 1200 + Math.random() * 500, easing: 'cubic-bezier(0.2, 0.6, 0.4, 1)', fill: 'forwards' });
+      setTimeout(function () {
+        out.cancel();
+        var back = sp.animate([
+          { transform: 'translate(' + dx * 1.35 + 'px,' + (dy + fall) + 'px) rotate(' + rot + 'deg)', opacity: 0 },
+          { transform: 'none', opacity: 1 }
+        ], { duration: 550, easing: 'ease-out' });
+        back.onfinish = function () { sp.classList.remove('flying'); };
+      }, 2400 + Math.random() * 700);
+    }
+    function scatterLetters(bx, by) {
+      var els = document.querySelectorAll('h1, h2, h3, p, li, figcaption, .credit, .step .n, .run .when');
+      for (var i = 0; i < els.length; i++) {
+        var r = els[i].getBoundingClientRect();
+        if (r.right < bx - BLAST_R || r.left > bx + BLAST_R ||
+            r.bottom < by - BLAST_R || r.top > by + BLAST_R) continue;
+        letterize(els[i]);
+        var letters = els[i].querySelectorAll('.ltr');
+        for (var j = 0; j < letters.length; j++) flyLetter(letters[j], bx, by);
+      }
+    }
+
+    // Firing at pictures disintegrates them: on a direct hit the image is
+    // swapped for a grid of background-slice tiles that blast outward,
+    // tumble, and burn away. The destruction is permanent until the page
+    // is reloaded.
+    function shatterImage(img, bx, by) {
+      if (img.dataset.shattered) return;
+      var r = img.getBoundingClientRect();
+      if (bx < r.left - 30 || bx > r.right + 30 || by < r.top - 30 || by > r.bottom + 30) return;
+      img.dataset.shattered = '1';
+      var overlay = document.createElement('div');
+      overlay.className = 'shatter';
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.style.left = r.left + 'px';
+      overlay.style.top = r.top + 'px';
+      overlay.style.width = r.width + 'px';
+      overlay.style.height = r.height + 'px';
+      var COLS = 8;
+      var ROWS = Math.max(4, Math.min(10, Math.round(COLS * r.height / r.width)));
+      var tw = r.width / COLS, th = r.height / ROWS;
+      var url = img.currentSrc || img.src;
+      var tiles = [];
+      for (var row = 0; row < ROWS; row++) {
+        for (var col = 0; col < COLS; col++) {
+          var tile = document.createElement('div');
+          tile.style.width = tw + 'px'; tile.style.height = th + 'px';
+          tile.style.left = col * tw + 'px'; tile.style.top = row * th + 'px';
+          tile.style.backgroundImage = 'url("' + url + '")';
+          tile.style.backgroundSize = r.width + 'px ' + r.height + 'px';
+          tile.style.backgroundPosition = (-col * tw) + 'px ' + (-row * th) + 'px';
+          overlay.appendChild(tile);
+          var cx = r.left + col * tw + tw / 2, cy = r.top + row * th + th / 2;
+          var d = Math.hypot(cx - bx, cy - by);
+          var ang = Math.atan2(cy - by, cx - bx) + (Math.random() - 0.5) * 0.5;
+          var power = 90 + 330 * Math.max(0, 1 - d / 420);
+          tiles.push({ el: tile,
+            dx: Math.cos(ang) * power, dy: Math.sin(ang) * power,
+            rot: (Math.random() - 0.5) * 720, fall: 300 + Math.random() * 300 });
+        }
+      }
+      document.body.appendChild(overlay);
+      img.style.visibility = 'hidden';
+      tiles.forEach(function (t) {
+        t.anim = t.el.animate([
+          { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+          { transform: 'translate(' + t.dx + 'px,' + t.dy + 'px) rotate(' + t.rot * 0.6 + 'deg)', opacity: 1, offset: 0.45 },
+          { transform: 'translate(' + t.dx * 1.35 + 'px,' + (t.dy + t.fall) + 'px) rotate(' + t.rot + 'deg)', opacity: 0 }
+        ], { duration: 1000 + Math.random() * 500, easing: 'cubic-bezier(0.2, 0.6, 0.4, 1)', fill: 'forwards' });
+      });
+      setTimeout(function () { overlay.remove(); }, 2200);   // the debris is gone; the hole stays
+    }
+
+    var BOOMS = [['mislb0.png', 73], ['mislc0.png', 88], ['misld0.png', 103]];
+    function explode(x, y) {
+      replay(boomSnd);
+      document.body.classList.remove('boom-shake');
+      void document.body.offsetWidth;   // restart the shake animation
+      document.body.classList.add('boom-shake');
+      scatterLetters(x, y);
+      var imgs = document.querySelectorAll('.content img');
+      for (var ii = 0; ii < imgs.length; ii++) shatterImage(imgs[ii], x, y);
+      if (cacoRocketHit) cacoRocketHit(x, y);
+      for (var mi = monsters.length - 1; mi >= 0; mi--) {
+        var m = monsters[mi];
+        if (m.dead) continue;
+        var mr = m.el.getBoundingClientRect();
+        if (x >= mr.left - 15 && x <= mr.right + 15 &&
+            y >= mr.top - 15 && y <= mr.bottom + 15) killMonster(m);
+      }
+      var b = document.createElement('img');
+      b.className = 'boom'; b.alt = ''; b.setAttribute('aria-hidden', 'true');
+      b.style.left = x + 'px'; b.style.top = y + 'px';
+      var i = 0;
+      b.src = ASSETS + BOOMS[0][0]; b.style.width = BOOMS[0][1] * 1.5 + 'px';
+      document.body.appendChild(b);
+      var t = setInterval(function () {
+        if (++i >= BOOMS.length) { clearInterval(t); b.remove(); return; }
+        b.src = ASSETS + BOOMS[i][0]; b.style.width = BOOMS[i][1] * 1.5 + 'px';
+      }, 110);
+    }
+
+    function fireRocket(tx, ty) {
+      var r = launcher.getBoundingClientRect();
+      var sx = r.left + r.width / 2, sy = r.top + r.height * 0.2;
+      launcher.classList.add('firing');
+      replay(launchSnd);
+      setTimeout(function () { launcher.classList.remove('firing'); }, 180);
+      var rocket = document.createElement('img');
+      rocket.className = 'rocket'; rocket.alt = ''; rocket.setAttribute('aria-hidden', 'true');
+      rocket.src = ASSETS + 'misla7a3.png';
+      var ang = Math.atan2(ty - sy, tx - sx) * 180 / Math.PI;
+      rocket.style.left = sx + 'px'; rocket.style.top = sy + 'px';
+      rocket.style.transform = 'translate(-50%,-50%) rotate(' + ang + 'deg)';
+      document.body.appendChild(rocket);
+      var ms = Math.max(130, Math.hypot(tx - sx, ty - sy) / 1.6);
+      // it flies away from the player, so it shrinks with distance
+      rocket.animate([
+        { left: sx + 'px', top: sy + 'px', transform: 'translate(-50%,-50%) rotate(' + ang + 'deg) scale(1)' },
+        { left: tx + 'px', top: ty + 'px', transform: 'translate(-50%,-50%) rotate(' + ang + 'deg) scale(0.35)' }
+      ], { duration: ms, easing: 'linear', fill: 'forwards' });
+      setTimeout(function () { rocket.remove(); explode(tx, ty); }, ms + 30);
+    }
+
+    var lastFire = 0;
+    window.addEventListener('pointerdown', function (e) {
+      if (!god || e.button !== 0) return;
+      if (e.target.closest && e.target.closest('a, audio, video, .player')) return;
+      var now = Date.now();
+      if (now - lastFire < 550) return;   // the launcher's rate of fire
+      lastFire = now;
+      ammoLeft = ammoLeft > 1 ? ammoLeft - 1 : 50;
+      updateAmmo();
+      fireRocket(e.clientX, e.clientY);
+    });
+
+    // Shooting gallery: while god mode is on, monsters from the flight WAD
+    // (zombieman, imp, demon) wander in at random spots and depths, sway as
+    // they slowly close in, and die by rocket. At most three at a time.
+    var MONSTER_TYPES = [
+      { walk: ['possa1', 'possb1', 'possc1', 'possd1'],
+        death: ['possh0', 'possi0', 'possj0', 'possk0', 'possl0'],
+        sight: 'dsposit1', die: 'dspodth1' },
+      { walk: ['trooa1', 'troob1', 'trooc1', 'trood1'],
+        death: ['trooi0', 'trooj0', 'trook0', 'trool0', 'troom0'],
+        sight: 'dsbgsit1', die: 'dsbgdth1' },
+      { walk: ['sarga1', 'sargb1', 'sargc1', 'sargd1'],
+        death: ['sargi0', 'sargj0', 'sargk0', 'sargl0', 'sargm0', 'sargn0'],
+        sight: 'dssgtsit', die: 'dssgtdth' }
+    ];
+    var monsters = [], galleryTimers = [];
+    function playOnce(file, vol) {
+      var snd = new Audio(ASSETS + file + '.wav');
+      snd.volume = vol;
+      var p = snd.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+    function placeMonster(m, now) {
+      var vh = window.innerHeight, vw = window.innerWidth;
+      var barH = stbar.getBoundingClientRect().height || vh * 0.1;
+      var scale = 1 + m.t * 2.4;                          // nearer is bigger
+      var bottom = barH - 8 + (1 - m.t) * (vh * 0.88 - barH);   // far spawns reach near the top
+      var x = m.x * vw + Math.sin((now - m.born) * m.swayFreq) * m.swayAmp;
+      m.el.style.left = x + 'px';
+      m.el.style.bottom = bottom + 'px';
+      m.el.style.transform = 'translateX(-50%) scale(' + scale.toFixed(3) + ')';
+    }
+    function spawnMonster() {
+      if (!god || monsters.length >= 9) return;
+      var type = MONSTER_TYPES[Math.floor(Math.random() * MONSTER_TYPES.length)];
+      var el = document.createElement('div');
+      el.className = 'monster';
+      el.setAttribute('aria-hidden', 'true');
+      var img = document.createElement('img');
+      img.alt = '';
+      img.src = ASSETS + type.walk[0] + '.png';
+      el.appendChild(img);
+      document.body.appendChild(el);
+      var m = {
+        el: el, img: img, type: type, dead: false, frame: 0,
+        x: 0.1 + Math.random() * 0.8,                     // fraction of viewport width
+        t: Math.random() * 0.65,                          // random spawn distance (0 = far, 1 = arrived)
+        speed: 1 / (28000 + Math.random() * 20000),       // ms to walk the whole way
+        swayAmp: 20 + Math.random() * 40,
+        swayFreq: 0.0004 + Math.random() * 0.0006,
+        born: performance.now()
+      };
+      m.walkTimer = setInterval(function () {
+        m.frame = (m.frame + 1) % type.walk.length;
+        img.src = ASSETS + type.walk[m.frame] + '.png';
+      }, 220);
+      monsters.push(m);
+      placeMonster(m, m.born);
+      playOnce(type.sight, 0.25);
+    }
+    function removeMonster(m) {
+      var i = monsters.indexOf(m);
+      if (i >= 0) monsters.splice(i, 1);
+      clearInterval(m.walkTimer);
+      m.el.style.opacity = '0';
+      setTimeout(function () { m.el.remove(); }, 450);
+    }
+    function killMonster(m) {
+      m.dead = true;
+      clearInterval(m.walkTimer);
+      playOnce(m.type.die, 0.35);
+      var frames = m.type.death, i = 0;
+      m.img.src = ASSETS + frames[0] + '.png';
+      var t = setInterval(function () {
+        if (++i >= frames.length) {
+          clearInterval(t);
+          setTimeout(function () { removeMonster(m); }, 1600);   // let the corpse rest
+          return;
+        }
+        m.img.src = ASSETS + frames[i] + '.png';
+      }, 130);
+    }
+    function monsterLoop() {
+      var now = performance.now();
+      for (var i = monsters.length - 1; i >= 0; i--) {
+        var m = monsters[i];
+        if (m.dead) continue;
+        m.t += m.speed * 50;
+        if (m.t >= 1) { removeMonster(m); continue; }     // reached you; wanders off
+        placeMonster(m, now);
+      }
+    }
+    function startGallery() {
+      stopGallery();
+      galleryTimers.push(setTimeout(spawnMonster, 500));
+      galleryTimers.push(setTimeout(spawnMonster, 1200));
+      galleryTimers.push(setTimeout(spawnMonster, 2000));
+      galleryTimers.push(setInterval(spawnMonster, 1600));
+      galleryTimers.push(setInterval(monsterLoop, 50));
+    }
+    function stopGallery() {
+      for (var i = 0; i < galleryTimers.length; i++) clearTimeout(galleryTimers[i]);
+      galleryTimers = [];
+      monsters.slice().forEach(removeMonster);
+    }
+
+    // At Doom's Gate (E1M1), rendered from the D_E1M1 MUS lump in the
+    // flight WAD with a square-wave synth (browsers cannot play MUS/MIDI),
+    // looping quietly while god mode is on.
+    var music = new Audio(ASSETS + 'd_e1m1.m4a');
+    music.loop = true;
+    music.volume = 0.3;
+    music.preload = 'auto';
+    music.load();
+    function startMusic() {
+      if (music.readyState) music.currentTime = 0;
+      var p = music.play();
+      // Some browsers only unlock audio on a click, not a keypress; if the
+      // cheat was typed before any click, start the music on the next one.
+      if (p && p.catch) p.catch(function () {
+        var arm = function () {
+          window.removeEventListener('pointerdown', arm);
+          if (god) { var q = music.play(); if (q && q.catch) q.catch(function () {}); }
+        };
+        window.addEventListener('pointerdown', arm);
+      });
+    }
+
+    window.addEventListener('keydown', function (e) {
+      if (e.metaKey || e.ctrlKey || e.altKey || !e.key || e.key.length !== 1) return;
+      cheat = (cheat + e.key.toLowerCase()).slice(-5);
+      if (cheat !== 'iddqd') return;
+      cheat = '';
+      god = !god;
+      stMessage(god ? 'Degreelessness Mode On' : 'Degreelessness Mode Off');
+      stbar.classList.toggle('on', god);
+      document.body.classList.toggle('god', god);
+      document.body.classList.remove('god-flash');
+      if (god) {
+        void document.body.offsetWidth;   // restart the flash animation
+        document.body.classList.add('god-flash');
+        startGallery();
+        startMusic();
+      } else {
+        stopGallery();
+        music.pause();
+      }
     });
 
     // Cacodemon easter egg. Click to punch it (the fist swings at the cursor).
     // After the first punch, the resting right hand stays up while you hover,
     // just like holding fists in the game, and swings on each click. Five
-    // punches kill it (death sprite held, floating stops); when the cursor
+    // punches kill it (death sprite held, floating stops); in god mode the
+    // launcher is out instead and one rocket does it. When the cursor
     // finally leaves the corpse, a golden figure appears for one loop and
-    // resurrects it (death in reverse), then it floats again on its idle loop.
+    // resurrects it (death in reverse), then it floats again on its idle
+    // loop.
     var caco = document.querySelector('.hero .sprite');
     if (caco) {
       var RESURRECT_MS = 750, GUY_MS = 3420;
@@ -321,7 +731,26 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
         fist.style.display = 'block'; caco.style.cursor = 'none';
       }
       function hide() { fist.style.display = 'none'; caco.style.cursor = ''; mode = null; }
-      function rest() { if (punched && !punching && overCaco && state !== 'reviving') show('rest', ASSETS + 'fist-idle.webp'); }
+      function rest() { if (punched && !punching && overCaco && !god && state !== 'reviving') show('rest', ASSETS + 'fist-idle.webp'); }
+
+      function kill() {
+        state = 'dead';
+        caco.classList.add('no-float');    // a corpse does not float
+        caco.src = bust(ASSETS + 'caco-death.webp');
+        // DSCACDTH is not in the shareware WAD (no Cacodemon in episode 1);
+        // DSSLOP, the gib splat, stands in for the death cry.
+        playOnce('dsslop', 0.4);
+      }
+
+      cacoRocketHit = function (x, y) {
+        if (state !== 'alive') return;
+        var r = caco.getBoundingClientRect();
+        if (x < r.left - 15 || x > r.right + 15 || y < r.top - 15 || y > r.bottom + 15) return;
+        kill();
+        // A rocket can kill from afar; if the cursor never visits the
+        // corpse, resurrect on a timer instead of waiting for mouseleave.
+        setTimeout(function () { if (!overCaco) revive(); }, 3000);
+      };
 
       // Drive the resting hand from mousemove too, so it is reliable regardless
       // of mouseenter (and it keeps the fist tracking the pointer while swinging).
@@ -329,17 +758,14 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
       caco.addEventListener('mouseenter', function (e) { overCaco = true; rest(); place(e); });
       caco.addEventListener('mouseleave', function () { overCaco = false; hide(); revive(); });
       caco.addEventListener('pointerdown', function (e) {
-        if (state !== 'alive') return;
+        if (god || state !== 'alive') return;   // god mode fires rockets instead
         punched = true;                      // the hand is now up (post first punch)
         punching = true;
         show('swing', bust(ASSETS + 'fist-anim.webp'));   // swing at the cursor
         place(e);
         setTimeout(function () { punching = false; rest(); }, PUNCH_MS);
-        if (++hits >= 5) {
-          state = 'dead';
-          caco.classList.add('no-float');    // a corpse does not float
-          caco.src = bust(ASSETS + 'caco-death.webp');
-        }
+        if (++hits >= 5) kill();
+        else playOnce('dsdmpain', 0.3);    // DSDMPAIN, the caco's actual pain sound
       });
 
       function revive() {
