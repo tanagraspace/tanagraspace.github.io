@@ -13,6 +13,7 @@ body {
   line-height: 1.6;
   color: var(--ink);
   background: var(--bg);
+  touch-action: manipulation;   /* rapid taps (IDDQD, rockets) must not double-tap-zoom */
 }
 a { color: var(--accent-dark); }
 code { background: rgba(0,0,0,0.06); padding: 0.12em 0.4em; border-radius: 4px;
@@ -139,6 +140,8 @@ body.god-flash::after { content: ""; position: fixed; inset: 0; z-index: 9997;
 .boom { position: fixed; z-index: 9996; pointer-events: none; transform: translate(-50%, -55%);
   height: auto; image-rendering: pixelated; }
 body.god .fist-follow { display: none !important; }
+/* Tapping to fire on a touch screen must not select the text it blasts. */
+body.god { -webkit-user-select: none; user-select: none; }
 .ltr.flying { display: inline-block; will-change: transform; }   /* transforms need a box */
 .monster { position: fixed; z-index: 9990; pointer-events: none;
   transform-origin: bottom center; transition: opacity 0.4s ease; }
