@@ -685,11 +685,7 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
       });
     }
 
-    window.addEventListener('keydown', function (e) {
-      if (e.metaKey || e.ctrlKey || e.altKey || !e.key || e.key.length !== 1) return;
-      cheat = (cheat + e.key.toLowerCase()).slice(-5);
-      if (cheat !== 'iddqd') return;
-      cheat = '';
+    function toggleGod() {
       god = !god;
       stMessage(god ? 'Degreelessness Mode On' : 'Degreelessness Mode Off');
       stbar.classList.toggle('on', god);
@@ -704,6 +700,33 @@ stylesheet: "/assets/opssat-pretty-doomed/style.css"
         stopGallery();
         music.pause();
       }
+    }
+
+    window.addEventListener('keydown', function (e) {
+      if (e.metaKey || e.ctrlKey || e.altKey || !e.key || e.key.length !== 1) return;
+      cheat = (cheat + e.key.toLowerCase()).slice(-5);
+      if (cheat !== 'iddqd') return;
+      cheat = '';
+      toggleGod();
+    });
+
+    // On a touch screen there is no keyboard to type IDDQD on, so five quick
+    // taps anywhere toggle god mode instead. Taps on the page's own
+    // interactive pieces don't count: links and the players do their own
+    // thing, and the cacodemon and the signal have their own tap easter
+    // eggs. This listener is registered after the rocket listener above, so
+    // the tap that turns god mode on sees god=false there and doesn't also
+    // fire a rocket; once god mode is on, every tap fires at where it lands.
+    var taps = 0, lastTap = 0;
+    window.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'touch') return;
+      if (e.target.closest && e.target.closest('a, audio, video, .player, .sprite, .voice')) return;
+      var now = Date.now();
+      taps = (now - lastTap < 400) ? taps + 1 : 1;
+      lastTap = now;
+      if (taps < 5) return;
+      taps = 0;
+      toggleGod();
     });
 
     // Cacodemon easter egg. Click to punch it (the fist swings at the cursor).
