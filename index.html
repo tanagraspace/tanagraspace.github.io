@@ -96,17 +96,14 @@ project_row:
   .ts-more { text-align: center; margin: -2.6rem auto 4.5rem; font-weight: 700; font-size: .95rem; }
   .ts-more a { color: #fc3a52; text-decoration: none; }
   .ts-more a:hover { text-decoration: underline; }
-  /* contact form, matching the card design */
-  .ts-contact { max-width: 640px; margin: 0 auto 2rem; background: #f2e6d2;
-    border: 1px solid rgba(20,10,10,.10); border-radius: 16px;
-    box-shadow: 0 3px 14px rgba(20,10,10,.10); padding: 1.8rem 2rem 2rem; }
-  .ts-contact label { font-weight: 700; font-size: .92rem; color: #1b1b1b; }
-  .ts-contact input, .ts-contact textarea { width: 100%; background: #fbf4e8;
-    border: 1px solid rgba(20,10,10,.15); border-radius: 10px; padding: .65rem .8rem;
-    font-size: 1rem; box-shadow: none; }
-  .ts-contact input:focus, .ts-contact textarea:focus {
-    border-color: #fc3a52; outline: none; box-shadow: 0 0 0 3px rgba(252,58,82,.18); }
-  .ts-contact .btn { padding: .7rem 2.4rem; border-radius: 10px; }
+  /* press releases: one wide card per release, image left, text right */
+  .ts-press-cards { max-width: 940px; margin: 0 auto 4.5rem; display: grid; gap: 1.6rem; }
+  .ts-card--wide { flex-direction: row; }
+  .ts-card--wide .ts-card__media { flex: 0 0 40%; aspect-ratio: auto; min-height: 220px; }
+  @media (max-width: 600px) {
+    .ts-card--wide { flex-direction: column; }
+    .ts-card--wide .ts-card__media { flex: none; aspect-ratio: 16 / 9; min-height: 0; }
+  }
 </style>
 
 <div class="ts-projects">
@@ -124,26 +121,34 @@ project_row:
 
 <p class="ts-more"><a href="https://github.com/tanagraspace">All projects on GitHub &rarr;</a></p>
 
+{% assign releases = site.press | sort: "date" | reverse %}
+{% if releases.size > 0 %}
+<div align="center">
+  <h2 class="archive__item-title" id="press">Press</h2>
+</div>
+
+<div class="ts-press-cards">
+{% for r in releases limit: 3 %}
+  <a class="ts-card ts-card--wide" href="{{ r.url }}">
+    {% assign thumb = r.header.teaser | default: r.header.og_image %}
+    {% if thumb %}<div class="ts-card__media" style="background-image: url('{{ thumb }}')"></div>{% endif %}
+    <div class="ts-card__body">
+      <p class="ts-dateline">{{ r.date | date: "%b %Y" | upcase }}</p>
+      <h3 class="ts-card__title">{{ r.title }}</h3>
+      <p class="ts-card__desc">{{ r.excerpt }}</p>
+      <span class="ts-card__cta">Read the release <span class="arrow">&rarr;</span></span>
+    </div>
+  </a>
+{% endfor %}
+</div>
+
+<p class="ts-more"><a href="/press/">All press releases &rarr;</a></p>
+{% endif %}
+
 <div>
   <div align="center">
     <h2 class="archive__item-title">Work With Us</h2>
   </div>
 
-  <form
-    class="ts-contact"
-    action="https://formspree.io/f/mrgodzqw"
-    method="POST"
-  >
-    <div class="form-group">
-      <label for="contactEmail">Your email:</label>
-      <input type="email" name="email" id="contactEmail" required />
-    </div>
-    <div class="form-group">
-      <label for="contactMessage">Your message:</label>
-      <textarea name="message" id="contactMessage" class="form-control" rows="5" required></textarea>
-    </div>
-    <div align="center">
-      <button type="submit" class="btn btn--primary">Send</button>
-    </div>
-  </form>
+  {% include contact-form.html %}
 </div>

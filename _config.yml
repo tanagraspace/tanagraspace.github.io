@@ -274,6 +274,12 @@ compress_html:
     envs: development
 
 
+# Collections
+collections:
+  press:
+    output: true
+    permalink: /press/:title/
+
 # Defaults
 defaults:
   # _posts
@@ -287,3 +293,13 @@ defaults:
       comments: # true
       share: true
       related: true
+  # _press
+  - scope:
+      path: ""
+      type: press
+    values:
+      layout: single
+      author_profile: false
+      read_time: false
+      share: true
+      related: false

@@ -1,0 +1,20 @@
+---
+title: "Press"
+layout: single
+permalink: /press/
+author_profile: false
+header:
+  overlay_color: "#140a0a"
+excerpt: "News and press releases from Tanagra Space."
+---
+
+<ul class="ts-press">
+{% assign releases = site.press | sort: "date" | reverse %}
+{% for r in releases %}
+  <li>
+    <p class="ts-dateline">{{ r.date | date: "%b %Y" | upcase }}</p>
+    <h2><a href="{{ r.url }}">{{ r.title }}</a></h2>
+    <p>{{ r.excerpt }}</p>
+  </li>
+{% endfor %}
+</ul>
