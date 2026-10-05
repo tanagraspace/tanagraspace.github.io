@@ -1,0 +1,73 @@
+<figure class="ts-audio">
+<div class="player">
+<audio src="{{ include.src }}" controls preload="metadata"></audio>
+</div>
+{% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
+</figure>
+<script>
+  (function () {
+    var PLAY = '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg>';
+    var PAUSE = '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0h4v14H0zM8 0h4v14H8z"/></svg>';
+    function clock(s) {
+      if (!isFinite(s)) return '0:00';
+      var m = Math.floor(s / 60);
+      var r = Math.floor(s % 60);
+      return m + ':' + (r < 10 ? '0' : '') + r;
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('.player'), function (box) {
+      var audio = box.querySelector('audio');
+      if (!audio) return;
+      audio.removeAttribute('controls');
+      box.classList.add('enhanced');
+      var pp = document.createElement('button');
+      pp.type = 'button';
+      pp.className = 'pp';
+      pp.innerHTML = PLAY;
+      pp.setAttribute('aria-label', 'Play the voice command');
+      var seek = document.createElement('input');
+      seek.type = 'range';
+      seek.className = 'seek';
+      seek.min = 0; seek.max = 100; seek.step = 0.1; seek.value = 0;
+      seek.setAttribute('aria-label', 'Seek within the voice command');
+      var time = document.createElement('span');
+      time.className = 't';
+      time.textContent = '0:00';
+      box.appendChild(pp);
+      box.appendChild(seek);
+      box.appendChild(time);
+      var scrubbing = false;
+      pp.addEventListener('click', function () {
+        if (audio.paused) { audio.play(); } else { audio.pause(); }
+      });
+      audio.addEventListener('play', function () {
+        pp.innerHTML = PAUSE;
+        pp.setAttribute('aria-label', 'Pause the voice command');
+      });
+      audio.addEventListener('pause', function () {
+        pp.innerHTML = PLAY;
+        pp.setAttribute('aria-label', 'Play the voice command');
+      });
+      audio.addEventListener('timeupdate', function () {
+        if (scrubbing || !audio.duration) return;
+        seek.value = (audio.currentTime / audio.duration) * 100;
+        time.textContent = clock(audio.currentTime) + ' / ' + clock(audio.duration);
+      });
+      audio.addEventListener('loadedmetadata', function () {
+        time.textContent = '0:00 / ' + clock(audio.duration);
+      });
+      audio.addEventListener('ended', function () {
+        seek.value = 0;
+        time.textContent = '0:00 / ' + clock(audio.duration);
+      });
+      seek.addEventListener('input', function () {
+        scrubbing = true;
+        if (audio.duration) time.textContent =
+          clock((seek.value / 100) * audio.duration) + ' / ' + clock(audio.duration);
+      });
+      seek.addEventListener('change', function () {
+        if (audio.duration) audio.currentTime = (seek.value / 100) * audio.duration;
+        scrubbing = false;
+      });
+    });
+  })();
+</script>
