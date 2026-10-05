@@ -19,7 +19,7 @@ On 27 July 2026, a radio amateur on a rooftop in Oslo spoke into a microphone: *
 
 Receiving voice commands was not part of the original spacecraft design of the OPS-SAT PRETTY mission. The satellite's primary mission is GNSS reflectometry and radiation monitoring. Almost three years after launch, new software developed by Tanagra Space was uploaded to the satellite. The software taught the satellite to listen for a human voice, on a frequency its antennas were never designed for.
 
-That flexibility is rare in spacecraft design. It comes from a reconfigurable onboard computer and a software-defined radio, which let a mission take on new work through a software update.
+That flexibility is rare in spacecraft design. It comes from a reconfigurable onboard computer and a software-defined radio. With them, a mission can take on new work through a software update.
 
 > "ESA's OPS-SAT Space Lab satellites give experimenters all over the world an opportunity to try their ideas on-board a real, flying mission. Running all these different experiments requires flexibility both from the spacecraft design and its operational team."
 >
@@ -90,7 +90,7 @@ The speech model on board was small, about 27 MB. Its transcription of the live 
 >
 > **Georges Labrèche**, Founder and Principal Investigator, Tanagra Space
 
-A radio telescope satellite could carry a model trained to catch bursts from deep space, and downlink only the bursts it finds. Any other signal processing application just needs a different model, uplinked to the same spacecraft.
+A radio telescope satellite could carry a model trained to catch bursts from deep space and downlink only the bursts it finds. Any other signal processing application just needs a different model uplinked to the same spacecraft.
 
 ## Resources
 
