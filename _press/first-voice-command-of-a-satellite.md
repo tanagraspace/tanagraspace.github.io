@@ -25,7 +25,7 @@ That flexibility is rare in spacecraft design. It comes from a reconfigurable on
 >
 > **Vladimir Zelenevskiy**, Experimenter and former OPS-SAT-1 Mission Control Team engineer
 
-OPS-SAT Space Lab, ESA's service for outside experimenters, embraced the idea and let volunteer radio amateurs transmit to the spacecraft. The ESA and TU Graz mission operations teams scheduled passes over amateur ground stations in Poland and Norway. It took seven flight runs, from April to July, to get the command through.
+OPS-SAT Space Lab, ESA's service for outside experimenters, embraced the idea and let volunteer radio amateurs transmit to the spacecraft. The mission operations teams at ESA's European Space Operations Centre (ESOC) and TU Graz scheduled passes over amateur ground stations in Poland and Norway. It took seven flight runs, from April to July, to get the command through.
 
 > "Not many teams get to point a radio at an orbiting ESA spacecraft and try something nobody has done before. Thank you to ESA and OPS-SAT Space Lab for this unique opportunity, and to the ESOC and TU Graz operators who made every pass happen."
 >
