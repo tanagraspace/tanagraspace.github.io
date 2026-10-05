@@ -39,6 +39,10 @@ Feedback from the radio amateurs also changed the flight software. In a raw reco
 
 On most satellite missions, changing flight software takes months of reviews. On OPS-SAT PRETTY, volunteers on a rooftop proposed a fix, Tanagra Space accepted it the same day, and about a week later the updated flight software was delivered to ESA.
 
+> "We are radio amateurs, with the emphasis on amateurs. Satellite work was not something our club did, and we had no budget for it. So we borrowed a line wrongly credited to Pippi Longstocking: 'I have never tried that before, so I should definitely be able to do that.' Fifty-nine days and about 7,200 NOK later, pizza included, our tiny ground station shouted at an ESA spacecraft and was heard."
+>
+> **Eskil Hadland (LB6AJ)**, Oslo Group of the Norwegian Radio Relay League (LA4O)
+
 <figure>
   <img src="/assets/press/la4o-evening-pass-operator_LA7IJ.jpg" alt="An operator wearing a headlamp speaks into a microphone at a folding table of radio equipment on a rooftop at night, with the lights of Oslo behind.">
   <figcaption>Jon Bergli Heier (LB9BJ) speaks the command on the rooftop at Nedre Rommen during the evening pass on 27 July. Photo: Truls Johansen (LA7IJ), LA4O.</figcaption>
