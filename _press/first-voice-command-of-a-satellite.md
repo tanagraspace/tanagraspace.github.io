@@ -90,7 +90,7 @@ The speech model on board was small, about 27 MB, and its transcription of the l
 >
 > **Georges Labrèche**, Founder and Principal Investigator, Tanagra Space
 
-The same idea reaches well beyond voice. A radio telescope satellite could carry a model trained to catch bursts from deep space, and downlink only the bursts it finds. Any other signal processing application just needs a different model, uplinked from the ground. Not a different spacecraft, not even different hardware.
+The same idea reaches well beyond voice. A radio telescope satellite could carry a model trained to catch bursts from deep space, and downlink only the bursts it finds. Any other signal processing application just needs a different model, uplinked to the same spacecraft.
 
 ## Resources
 
