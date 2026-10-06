@@ -1,15 +1,10 @@
 ---
 title: "Tanagra Space"
-layout: splash
+layout: default
 header:
-  overlay_color: "#000"
-  overlay_filter: "0.2"
-  overlay_image: /assets/img/hero-abstract.png
   og_image: /assets/img/og-card.png
-excerpt: "Launching artificial intelligence into orbit.<br><br>"
+excerpt: "Machine learning that runs on board spacecraft, so missions can decide in orbit."
 
-intro:
-  - excerpt: 'Pioneering **Space Platform as-a-Service (SPaaS)** with satellite edge computing for onboard machine learning in autonomous flight operations.<br><br>*Bringing neural networks into space!*'
 
 feature_row:
   - image_path: /assets/img/services/onboard-autonomy.png
@@ -65,90 +60,86 @@ project_row:
     btn_class: "btn--primary"
 ---
 
-{% include feature_row id="intro" type="center" %}
-{% include feature_row %}
-
-<div align="center">
-  <h2 class="archive__item-title" id="projects">Recent Projects</h2>
-</div>
-
-<style>
-  /* give the hero more presence and reveal more of the orbit artwork */
-  .page__hero--overlay { padding: 7em 0 6em; }
-  /* round the service teasers to match the project cards */
-  .feature__item .archive__item-teaser { border-radius: 16px; overflow: hidden; }
-  .ts-projects { max-width: 940px; margin: 0 auto 4.5rem; display: grid;
-    grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
-  @media (max-width: 600px) { .ts-projects { grid-template-columns: 1fr; } }
-  .ts-card { display: flex; flex-direction: column; background: #f2e6d2; border-radius: 16px;
-    overflow: hidden; text-decoration: none !important; color: inherit;
-    border: 1px solid rgba(20,10,10,.10); box-shadow: 0 3px 14px rgba(20,10,10,.10);
-    transition: transform .18s ease, box-shadow .18s ease; }
-  .ts-card:hover { transform: translateY(-6px); box-shadow: 0 16px 34px rgba(20,10,10,.22); }
-  .ts-card__media { aspect-ratio: 16 / 9; background-color: #140a0a;
-    background-position: center; background-size: cover; background-repeat: no-repeat; }
-  .ts-card__body { display: flex; flex-direction: column; flex: 1; padding: 1.15rem 1.35rem 1.35rem; }
-  .ts-card__title { margin: 0 0 .4rem; font-size: 1.22rem; font-weight: 700; color: #1b1b1b; line-height: 1.25; }
-  .ts-card__desc { margin: 0 0 1rem; font-size: .94rem; line-height: 1.5; color: #5c554c; flex: 1; }
-  .ts-card__cta { align-self: flex-start; font-weight: 700; color: #fc3a52; font-size: .92rem; }
-  .ts-card__cta .arrow { display: inline-block; transition: transform .18s ease; }
-  .ts-card:hover .ts-card__cta .arrow { transform: translateX(4px); }
-  .ts-more { text-align: center; margin: -2.6rem auto 4.5rem; font-weight: 700; font-size: .95rem; }
-  .ts-more a { color: #fc3a52; text-decoration: none; }
-  .ts-more a:hover { text-decoration: underline; }
-  /* press releases: one wide card per release, image left, text right */
-  .ts-press-cards { max-width: 940px; margin: 0 auto 4.5rem; display: grid; gap: 1.6rem; }
-  .ts-card--wide { flex-direction: row; }
-  .ts-card--wide .ts-card__media { flex: 0 0 40%; aspect-ratio: auto; min-height: 220px; }
-  @media (max-width: 600px) {
-    .ts-card--wide { flex-direction: column; }
-    .ts-card--wide .ts-card__media { flex: none; aspect-ratio: 16 / 9; min-height: 0; }
-  }
-</style>
-
-<div class="ts-projects">
-{% for p in page.project_row %}
-  <a class="ts-card" href="{{ p.url }}">
-    <div class="ts-card__media" style="background-image: url('{{ p.image_path }}')"></div>
-    <div class="ts-card__body">
-      <h3 class="ts-card__title">{{ p.title }}</h3>
-      <p class="ts-card__desc">{{ p.excerpt }}</p>
-      <span class="ts-card__cta">{{ p.btn_label }} <span class="arrow">&rarr;</span></span>
+<section class="ts-hero">
+  {% include hero-orbit.svg %}
+  <div class="ts-wrap">
+    <p class="ts-eyebrow">Onboard AI &middot; Edge computing &middot; Flight-proven</p>
+    <h1>Launching artificial intelligence into orbit.</h1>
+    <p class="ts-hero__lead">Tanagra Space develops machine learning that runs on board spacecraft, so missions can detect, decide, and act in orbit without waiting for the ground.</p>
+    <div class="ts-hero-cta">
+      <a class="btn" href="#projects">See our work</a>
+      <a class="btn btn--ghost" href="#contact">Work with us</a>
     </div>
-  </a>
-{% endfor %}
-</div>
+  </div>
+</section>
 
-<p class="ts-more"><a href="https://github.com/tanagraspace">All projects on GitHub &rarr;</a></p>
+<main id="main" role="main">
+
+<section class="ts-section" aria-labelledby="services">
+  <div class="ts-section__head"><div><p class="ts-eyebrow">What we do</p><h2 id="services">Services</h2></div></div>
+  <div class="ts-services">
+  {% for f in page.feature_row %}
+    <article class="ts-service">
+      <img src="{{ f.image_path }}" alt="{{ f.alt }}" loading="lazy">
+      <h3>{{ f.title }}</h3>
+      <p>{{ f.excerpt | markdownify | remove: "<p>" | remove: "</p>" }}</p>
+    </article>
+  {% endfor %}
+  </div>
+</section>
+
+<section class="ts-section" aria-labelledby="projects">
+  <div class="ts-section__head">
+    <div><p class="ts-eyebrow">Recent work</p><h2 id="projects">Projects</h2></div>
+    <a class="ts-link-more" href="https://github.com/tanagraspace">All projects on GitHub &rarr;</a>
+  </div>
+  <div class="ts-projects">
+  {% for p in page.project_row %}
+    <a class="ts-card" href="{{ p.url }}">
+      <div class="ts-card__media" style="background-image: url('{{ p.image_path }}')" role="img" aria-label="{{ p.alt }}"></div>
+      <div class="ts-card__body">
+        <h3 class="ts-card__title">{{ p.title }}</h3>
+        <p class="ts-card__desc">{{ p.excerpt }}</p>
+        <span class="ts-card__cta">{{ p.btn_label }} <span class="arrow">&rarr;</span></span>
+      </div>
+    </a>
+  {% endfor %}
+  </div>
+</section>
 
 {% assign releases = site.press | sort: "date" | reverse %}
 {% if releases.size > 0 %}
-<div align="center">
-  <h2 class="archive__item-title" id="press">Press</h2>
-</div>
-
-<div class="ts-press-cards">
-{% for r in releases limit: 3 %}
-  <a class="ts-card ts-card--wide" href="{{ r.url }}">
-    {% assign thumb = r.header.teaser | default: r.header.og_image %}
-    {% if thumb %}<div class="ts-card__media" style="background-image: url('{{ thumb }}')"></div>{% endif %}
-    <div class="ts-card__body">
-      <p class="ts-dateline">{{ r.date | date: "%b %Y" | upcase }}</p>
-      <h3 class="ts-card__title">{{ r.title }}</h3>
-      <p class="ts-card__desc">{{ r.excerpt }}</p>
-      <span class="ts-card__cta">Read the release <span class="arrow">&rarr;</span></span>
-    </div>
-  </a>
-{% endfor %}
-</div>
-
-<p class="ts-more"><a href="/press/">All press releases &rarr;</a></p>
+<section class="ts-section" aria-labelledby="press">
+  <div class="ts-section__head">
+    <div><p class="ts-eyebrow">News</p><h2 id="press">Press</h2></div>
+    <a class="ts-link-more" href="/press/">All press releases &rarr;</a>
+  </div>
+  <div class="ts-press-cards">
+  {% for r in releases limit: 3 %}
+    <a class="ts-card ts-card--wide" href="{{ r.url }}">
+      {% assign thumb = r.header.teaser | default: r.header.og_image %}
+      {% if thumb %}<div class="ts-card__media" style="background-image: url('{{ thumb }}')"></div>{% endif %}
+      <div class="ts-card__body">
+        <p class="ts-dateline">{{ r.date | date: "%B %-d, %Y" }}</p>
+        <h3 class="ts-card__title">{{ r.title }}</h3>
+        <p class="ts-card__desc">{{ r.excerpt }}</p>
+        <span class="ts-card__cta">Read the release <span class="arrow">&rarr;</span></span>
+      </div>
+    </a>
+  {% endfor %}
+  </div>
+</section>
 {% endif %}
 
-<div>
-  <div align="center">
-    <h2 class="archive__item-title">Work With Us</h2>
+<section class="ts-section" aria-labelledby="contact">
+  <div class="ts-contact-block">
+    <div>
+      <p class="ts-eyebrow">Contact</p>
+      <h2 id="contact">Work with us</h2>
+      <p>Mission operators, payload teams, and researchers: tell us what you want your spacecraft to decide on its own. Press inquiries are welcome too.</p>
+    </div>
+    {% include contact-form.html %}
   </div>
+</section>
 
-  {% include contact-form.html %}
-</div>
+</main>
