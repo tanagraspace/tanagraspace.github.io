@@ -5,7 +5,7 @@ date: 2026-10-05
 published: true
 header:
   overlay_color: "#140a0a"
-  og_image: /assets/opssat-pretty-doomed/opssat-pretty-doomed-social-card.png
+  og_image: /assets/press/first-voice-command-share-card.png
   teaser: /assets/press/first-voice-command-thumbnail.png
 ---
 
