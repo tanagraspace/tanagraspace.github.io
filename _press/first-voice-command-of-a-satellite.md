@@ -102,7 +102,7 @@ A radio telescope satellite could carry a model trained to catch bursts from dee
 
 ## About Tanagra Space
 
-Tanagra Space is an Estonian AI consultancy that develops machine learning for autonomous decision-making in space. It runs experiments and technology demonstrators onboard ESA's OPS-SAT spacecraft.
+Tanagra Space develops machine learning for autonomous decision-making in space. Its software runs on board spacecraft, so missions can detect, decide, and act in orbit without waiting for the ground. Tanagra Space has flown experiments and technology demonstrators on ESA's OPS-SAT spacecraft.
 
 ## Media Contact
 
