@@ -22,9 +22,22 @@
   {% if og_description %}<meta name="twitter:description" content="{{ og_description }}">{% endif %}
   {% if page.image %}<meta name="twitter:image" content="{{ page.image }}">{% endif %}
   {% if page.preload_audio %}<link rel="preload" href="{{ page.preload_audio }}" as="audio" type="audio/mpeg">{% endif %}
+  <meta name="theme-color" content="#161616">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Nunito+Sans:opsz,wght@6..12,300..800&display=swap">
+  <link rel="stylesheet" href="{{ '/assets/css/standalone.css' | relative_url }}">
   {% if page.stylesheet %}<link rel="stylesheet" href="{{ page.stylesheet }}">{% endif %}
 </head>
 <body>
+{% include masthead.html %}
 {{ content }}
+<div id="footer" class="page__footer">
+  <footer>
+    {% include footer.html %}
+  </footer>
+</div>
 </body>
 </html>
