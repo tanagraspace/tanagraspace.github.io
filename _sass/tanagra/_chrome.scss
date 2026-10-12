@@ -1,0 +1,48 @@
+// Site chrome shared by every layout: brand tokens, the header, and the footer.
+// Imported by assets/css/main.scss (theme pages) and assets/css/standalone.scss (standalone pages).
+
+:root {
+  --ts-yellow: #ffcb24;
+  --ts-charcoal: #2d2d2d;
+  --ts-ground: #161616;
+  --ts-surface: #202020;
+  --ts-text: #e8e4dc;
+  --ts-muted: #a19c93;
+  --ts-line: #333333;
+  --ts-width: 1120px;
+  --ts-gutter: clamp(1rem, 4vw, 2rem);
+  color-scheme: dark;
+}
+
+/* ---------- header ---------- */
+.ts-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: rgba(22, 22, 22, .86); backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px); border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.ts-header__inner {
+  max-width: var(--ts-width); margin: 0 auto; padding: .8rem var(--ts-gutter);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.ts-brand { display: inline-flex; align-items: center; gap: .65rem; color: #fff !important; text-decoration: none; }
+.ts-brand img { width: 22px; height: auto; display: block; }
+.ts-brand span { font-size: 1.08rem; font-weight: 400; letter-spacing: .01em; }
+.ts-nav { display: flex; gap: clamp(1rem, 3vw, 2rem); margin: 0; padding: 0; list-style: none; }
+.ts-nav a { color: var(--ts-text); text-decoration: none; font-size: .92rem; font-weight: 600; }
+.ts-nav a:hover, .ts-nav a[aria-current="page"] { color: var(--ts-yellow); }
+@media (max-width: 420px) { .ts-brand span { display: none; } }
+
+/* ---------- footer ---------- */
+.page__footer { background: #111111; color: var(--ts-muted); margin-top: 5rem; border-top: 1px solid rgba(255,255,255,.06); position: static; }
+.page__footer footer { max-width: var(--ts-width); margin-left: auto; margin-right: auto;
+  padding-left: var(--ts-gutter); padding-right: var(--ts-gutter); box-sizing: border-box; padding-top: 2.6rem; padding-bottom: calc(2.2rem + env(safe-area-inset-bottom, 0px)); }
+.ts-footer { display: flex; justify-content: space-between; align-items: start; gap: 2rem; flex-wrap: wrap; }
+.ts-footer__brand { display: flex; gap: .8rem; align-items: center; }
+.ts-footer__brand img { width: 22px; }
+.ts-footer__brand strong { color: #fff; font-weight: 400; font-size: 1.05rem; }
+.ts-footer__brand span { display: block; font-size: .86rem; }
+.ts-footer__links { display: flex; gap: 1.6rem; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+.ts-footer__links a { color: var(--ts-text); text-decoration: none; font-size: .9rem; font-weight: 600; }
+.ts-footer__links a:hover { color: var(--ts-yellow); }
+.ts-footer__legal { margin-top: 2rem; font-size: .8rem; color: #77736c; }
+

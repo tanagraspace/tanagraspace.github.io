@@ -1,0 +1,9 @@
+---
+# Site chrome for standalone pages, which carry their own page stylesheet.
+---
+
+@import "tanagra/chrome";
+
+.ts-header, .page__footer { font-family: "Nunito Sans", "Avenir Next", Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.5; }
+.ts-header ul, .page__footer ul { margin: 0; padding: 0; }
+.ts-footer__brand strong { display: block; }
