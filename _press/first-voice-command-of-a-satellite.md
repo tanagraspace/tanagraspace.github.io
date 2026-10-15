@@ -23,13 +23,13 @@ That flexibility is rare in spacecraft design. It comes from a reconfigurable on
 
 > "ESA's OPS-SAT Space Lab satellites give experimenters all over the world an opportunity to try their ideas on-board a real, flying mission. Running all these different experiments requires flexibility both from the spacecraft design and its operational team."
 >
-> **Vladimir Zelenevskiy**, Experimenter and former OPS-SAT-1 Mission Control Team engineer
+> **Vladimir Zelenevskiy**, Experimenter and former OPS-SAT-1 Mission Control Team engineer.
 
 OPS-SAT Space Lab, ESA's service for outside experimenters, embraced the idea and let volunteer radio amateurs transmit to the spacecraft. The mission operations teams at ESA's European Space Operations Centre (ESOC) and TU Graz scheduled passes over amateur ground stations in Poland and Norway. It took seven flight runs, from April to July, to get the command through.
 
 > "Not many teams get to point a radio at an orbiting ESA spacecraft and try something nobody has done before. Thank you to ESA and OPS-SAT Space Lab for this unique opportunity, and to the ESOC and TU Graz operators who made every pass happen."
 >
-> **Georges Labrèche**, Founder and Principal Investigator, Tanagra Space
+> **Georges Labrèche**, Founder and Principal Investigator, Tanagra Space.
 
 ## The Radio Amateurs
 
@@ -41,7 +41,7 @@ On most satellite missions changing flight software takes months of reviews. On 
 
 > "We are radio amateurs, with the emphasis on amateurs. Satellite work was not something our club did, and we had no budget for it. So we borrowed a line wrongly credited to Pippi Longstocking: 'I have never tried that before, so I should definitely be able to do that.' Fifty-nine days and about 7,200 NOK later, pizza included, our tiny ground station shouted at an ESA spacecraft and was heard."
 >
-> **Eskil Hadland (LB6AJ)**, Oslo Group of the Norwegian Radio Relay League (LA4O)
+> **Eskil Hadland (LB6AJ)**, Oslo Group of the Norwegian Radio Relay League (LA4O).
 
 <figure>
   <img src="/assets/press/la4o-evening-pass-operator_LA7IJ.jpg" alt="An operator wearing a headlamp speaks into a microphone at a folding table of radio equipment on a rooftop at night, with the lights of Oslo behind.">
@@ -64,7 +64,7 @@ After launching DOOM, the payload computer put together a report for the ground 
 
 > "The key part of being able to pull this off is the portability and deterministic aspect of DOOM."
 >
-> **Ólafur Waage**, Experiment Co-Designer and Co-Developer
+> **Ólafur Waage**, Experiment Co-Designer and Co-Developer.
 
 The satellite also sent back its own recording of the live voice command:
 
@@ -76,7 +76,7 @@ No two people say *"PLAY DOOM"* the same way. Noise, Doppler shift, and an anten
 
 > "This experiment is fun, but the idea behind it is key. Space-ground communication is normally defined precisely, down to the bit sequence. Here, a reconfigurable software-defined radio, a powerful processor, and terrestrial software repurposed for in-space applications detected something that is not very well defined, a human voice."
 >
-> **David Evans**, Head of OPS-SAT Space Lab, ESA
+> **David Evans**, Head of OPS-SAT Space Lab, ESA.
 
 Jamming, misuse of protected frequencies, and distress signals are just as hard to define in advance, and the same approach can detect them. Analyzing these signals on the ground means waiting for a ground station pass, and then for a person to review the data. A satellite that detects and recognizes the signal on board can react right away and send down readily available results.
 
@@ -88,7 +88,7 @@ The speech model on board was small, about 27 MB. Its transcription of the live 
 
 > "The voice was only the test signal. With PRETTY, we've demonstrated a satellite that can listen to any type of radio signal and act on what it hears. Trained on something other than speech, the same setup becomes a different instrument."
 >
-> **Georges Labrèche**, Founder and Principal Investigator, Tanagra Space
+> **Georges Labrèche**, Founder and Principal Investigator, Tanagra Space.
 
 A radio telescope satellite could carry a model trained to catch bursts from deep space and downlink only the bursts it finds. Any other signal processing application just needs a different model uplinked to the same spacecraft.
 
