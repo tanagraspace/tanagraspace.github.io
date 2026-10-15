@@ -86,7 +86,7 @@ Recognizing a voice from orbit is useful for more than commands. Someone in dist
 
 The speech model on board was only about 27 MB. Its transcription of the live voice was rough but it still caught the command. A larger model could understand full sentences and their context.
 
-> "The voice was only the test signal. With PRETTY, we've demonstrated a satellite that can listen to any type of radio signal and act on what it hears. Trained on something other than speech, the same setup becomes a different instrument."
+> "The voice was only the test signal. With PRETTY, we've demonstrated a satellite that can listen to any type of radio signal and act on what it hears. The same setup becomes a different instrument when trained on something other than speech."
 >
 > **Georges Labrèche**, Founder and Principal Investigator, Tanagra Space.
 
