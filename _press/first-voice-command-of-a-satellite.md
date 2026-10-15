@@ -82,7 +82,7 @@ Jamming, misuse of protected frequencies, and distress signals are just as hard 
 
 ## Other Signals a Satellite Could Listen For
 
-Recognizing a voice from orbit is useful for more than commands. Someone in distress at sea or in a remote area could transmit *"mayday"* or *"help"* on a radio. A satellite overhead could detect the call, transcribe it, and use AI to work out the language and how urgent the call is. It could then pass an alert to rescue services, without waiting for a ground station to process a recording.
+Recognizing a voice from orbit is useful for more than commands. Someone in distress at sea or in a remote area could transmit *"mayday"* or *"help"* on a radio. A satellite overhead could detect the call, transcribe it, and use AI to work out the language and how urgent the call is. It could then pass an alert to rescue services without waiting for a ground station to process a recording.
 
 The speech model on board was small, about 27 MB. Its transcription of the live voice was rough, but it still caught the command. A larger model could understand full sentences and their context.
 
