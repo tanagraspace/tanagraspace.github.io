@@ -78,7 +78,7 @@ No two people say *"PLAY DOOM"* the same way. Noise, Doppler shift, and an anten
 >
 > **David Evans**, Head of OPS-SAT Space Lab, ESA.
 
-Jamming, misuse of protected frequencies, and distress signals are just as hard to define in advance, and the same approach can detect them. Analyzing these signals on the ground means waiting for a ground station pass and then for a person to review the data. A satellite that detects and recognizes the signal on board can react right away and send down readily available results.
+Jamming, misuse of protected frequencies, and distress signals are just as hard to define in advance. The same approach can detect them. Analyzing these signals on the ground means waiting for a ground station pass and then for a person to review the data. A satellite that detects and recognizes the signal on board can react right away and send down readily available results.
 
 ## Other Signals a Satellite Could Listen For
 
