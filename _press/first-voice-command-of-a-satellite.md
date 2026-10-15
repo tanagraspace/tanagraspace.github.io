@@ -35,9 +35,9 @@ OPS-SAT Space Lab, ESA's service for outside experimenters, embraced the idea an
 
 Volunteer radio amateurs were the ground segment. Operators in Legnica, Poland, made the first four attempts from April to June 2026. In July, the Oslo Group of the Norwegian Radio Relay League (LA4O) took over.
 
-Feedback from the radio amateurs also changed the flight software. In a raw recording from their first attempt on 3 July, the Oslo team could recognize the operator's voice but not the words. Their analysis showed that the receiver channel on board was far wider than the voice signal, and they proposed narrowing it.
+Feedback from the radio amateurs also changed the flight software. In a raw recording from their first attempt on 3 July, the Oslo team could recognize the operator's voice but not the words. Their analysis showed that the receiver channel on board was far wider than the voice signal and they proposed narrowing it.
 
-On most satellite missions, changing flight software takes months of reviews. On OPS-SAT PRETTY, volunteers on a rooftop proposed a fix, Tanagra Space accepted it the same day, and about a week later the updated flight software was delivered to ESA.
+On most satellite missions changing flight software takes months of reviews. On OPS-SAT PRETTY it took only a handful of volunteers on a rooftop ground station to propose a fix that Tanagra Space developed the same day and delivered to ESA as updated flight software about a week later.
 
 > "We are radio amateurs, with the emphasis on amateurs. Satellite work was not something our club did, and we had no budget for it. So we borrowed a line wrongly credited to Pippi Longstocking: 'I have never tried that before, so I should definitely be able to do that.' Fifty-nine days and about 7,200 NOK later, pizza included, our tiny ground station shouted at an ESA spacecraft and was heard."
 >
