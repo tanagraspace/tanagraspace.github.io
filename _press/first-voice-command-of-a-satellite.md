@@ -78,19 +78,19 @@ No two people say *"PLAY DOOM"* the same way. Noise, Doppler shift, and an anten
 >
 > **David Evans**, Head of OPS-SAT Space Lab, ESA.
 
-Jamming, misuse of protected frequencies, and distress signals are just as hard to define in advance, and the same approach can detect them. Analyzing these signals on the ground means waiting for a ground station pass, and then for a person to review the data. A satellite that detects and recognizes the signal on board can react right away and send down readily available results.
+Jamming, misuse of protected frequencies, and distress signals are just as hard to define in advance. The same approach can detect them. Analyzing these signals on the ground means waiting for a ground station pass and then for a person to review the data. A satellite that detects and recognizes the signal on board can react right away and send down readily available results.
 
 ## Other Signals a Satellite Could Listen For
 
-Recognizing a voice from orbit is useful for more than commands. Someone in distress at sea or in a remote area could transmit *"mayday"* or *"help"* on a radio. A satellite overhead could detect the call, transcribe it, and use AI to work out the language and how urgent the call is. It could then pass an alert to rescue services, without waiting for a ground station to process a recording.
+Recognizing a voice from orbit is useful for more than commands. Someone in distress at sea or in a remote area could transmit *"mayday"* or *"help"* on a radio. A satellite overhead could detect the call, transcribe it, and use AI to work out the language and how urgent the call is. It could then pass an alert to rescue services without waiting for a ground station to process a recording.
 
-The speech model on board was small, about 27 MB. Its transcription of the live voice was rough, but it still caught the command. A larger model could understand full sentences and their context.
+The speech model on board was only about 27 MB. Its transcription of the live voice was rough but it still caught the command. A larger model could understand full sentences and their context.
 
-> "The voice was only the test signal. With PRETTY, we've demonstrated a satellite that can listen to any type of radio signal and act on what it hears. Trained on something other than speech, the same setup becomes a different instrument."
+> "The voice was only the test signal. With PRETTY, we've demonstrated a satellite that can listen to any type of radio signal and act on what it hears. The same setup becomes a different instrument when trained on something other than speech."
 >
 > **Georges Labrèche**, Founder and Principal Investigator, Tanagra Space.
 
-A radio telescope satellite could carry a model trained to catch bursts from deep space and downlink only the bursts it finds. Any other signal processing application just needs a different model uplinked to the same spacecraft.
+Future missions can take this approach well beyond voice. A radio telescope satellite could carry a model trained to catch bursts from deep space and downlink only the bursts it finds. A new application does not need new hardware. Operators only have to uplink a different model to a spacecraft that is already in orbit.
 
 ## Resources
 
