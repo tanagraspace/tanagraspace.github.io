@@ -2,6 +2,7 @@
 title: "First Voice Command of a Satellite Achieved Through ESA's OPS-SAT Space Lab"
 excerpt: "ESA's OPS-SAT PRETTY heard a spoken command from the ground, understood it, and carried it out in orbit."
 date: 2026-10-05
+last_modified_at: 2026-10-15
 published: true
 header:
   overlay_color: "#140a0a"
